@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:phone_number_app/widgets/phone_number_format.dart';
+
+import 'buttons/checked_button.dart';
+import 'buttons/country_picker_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,13 +30,8 @@ class EnterNumberScreen extends StatefulWidget {
 }
 
 class _EnterNumberScreenState extends State<EnterNumberScreen> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
+  final myController = TextEditingController();
+  bool isButtonDisabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,6 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
               colors: [
                 Color(0xFF8DA9FA),
                 Color(0xFF8EAAFB),
-                Color(0xFF8048FB),
               ],
             ),
           ),
@@ -51,43 +52,24 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
             title: Column(
               children: [
                 const Padding(
-                  padding: EdgeInsets.fromLTRB(20, 80, 120, 160),
-                  child: Text('Get Started',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.w700,
-                      )),
+                  padding: EdgeInsets.fromLTRB(0, 80, 120, 160),
+                  child: SizedBox(
+                    width: 344,
+                    height: 40,
+                    child: Text('Get Started',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        )),
+                  ),
                 ),
                 Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 71,
                       height: 48,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('+1',
-                            style: TextStyle(
-                              color: Colors.black38,
-                            )),
-                        style: ButtonStyle(
-                          shadowColor: MaterialStateProperty.all<Color>(
-                              Colors.transparent),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              side: BorderSide.none,
-                            ),
-                          ),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0x66F4F5FF)),
-                          padding:
-                              MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            const EdgeInsets.fromLTRB(20, 0, 5, 0),
-                          ),
-                        ),
-                      ),
+                      child: CountryPickerButton(),
                     ),
                     const SizedBox(
                       width: 8,
@@ -96,12 +78,17 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
                         child: SizedBox(
                       width: 256,
                       height: 48,
-                      child: TextField(
+                      child: TextFormField(
+                        autofocus: true,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          PhoneNumberTextInputFormatter(),
+                        ],
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           filled: true,
                           fillColor: const Color(0x66F4F5FF),
-                          hintText: 'Enter phone number',
+                          hintText: '(453) 453-4563',
                           contentPadding: const EdgeInsets.all(10),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -112,9 +99,17 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        controller: _controller,
-                        onSubmitted: (String value) {
-                          debugPrint(value);
+                        controller: myController,
+                        onChanged: (text) {
+                          if (text.length >= 10) {
+                            setState(() {
+                              isButtonDisabled = false;
+                            });
+                          } else {
+                            setState(() {
+                              isButtonDisabled = true;
+                            });
+                          }
                         },
                       ),
                     )),
@@ -125,18 +120,7 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Color(0xA6F4F5FF),
-        child: const Icon(
-          Icons.arrow_right_alt_outlined,
-          color: Colors.black45,
-          size: 30,
-        ),
-        shape: RoundedRectangleBorder(
-            side: BorderSide(width: 3, color: Colors.transparent),
-            borderRadius: BorderRadius.circular(16)),
-      ),
+      floatingActionButton: CheckedButton(active: isButtonDisabled),
     );
   }
 }
