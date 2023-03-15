@@ -5,46 +5,41 @@ class PhoneNumberTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    final int newTextLength = newValue.text.length;
-    int index = newValue.selection.end;
-    int usedSubstringIndex = 0;
+    var text = newValue.text;
 
-    final StringBuffer newText = new StringBuffer();
-
-    if (newValue.text.isEmpty) return newValue;
-    if (newValue.text.length < oldValue.text.length) return oldValue;
-
-    if (newTextLength >= 1) {
-      newText.write('(');
-      if (newValue.selection.end >= 1) {
-        index++;
-      }
+    if (newValue.selection.baseOffset == 0) {
+      return newValue;
     }
 
-    if (newTextLength >= 4) {
-      newText.write(newValue.text.substring(0, usedSubstringIndex = 3) + ') ');
-      if (newValue.selection.end >= 3) {
-        index += 2;
+    var index = 0;
+    var formatted = '';
+
+    for (var i = 0; i < text.length; i++) {
+      if (text[i] == '(' ||
+          text[i] == ')' ||
+          text[i] == ' ' ||
+          text[i] == '-') {
+        continue;
       }
+
+      if (index == 0) {
+        formatted += '(';
+      } else if (index == 3) {
+        formatted += ') ';
+      } else if (index == 6) {
+        formatted += '-';
+      }
+
+      if (index >= 10) {
+        break;
+      }
+
+      formatted += text[i];
+      index++;
     }
 
-    if (newTextLength >= 7) {
-      newText.write(newValue.text.substring(3, usedSubstringIndex = 6) + '-');
-      if (newValue.selection.end >= 6) {
-        index++;
-      }
-    }
-
-    if (newTextLength >= 11) {
-      newText.write(newValue.text.substring(6, usedSubstringIndex = 10) + ' ');
-      if (newValue.selection.end >= 10) {
-        index++;
-      }
-    }
-
-    return TextEditingValue(
-      text: newText.toString(),
-      selection: TextSelection.collapsed(offset: index),
-    );
+    return newValue.copyWith(
+        text: formatted,
+        selection: TextSelection.collapsed(offset: formatted.length));
   }
 }
