@@ -12,36 +12,41 @@ class CountryPickerButton extends StatefulWidget {
 }
 
 class _CountryPickerButtonState extends State<CountryPickerButton> {
+  bool firstStart = true;
   String code = '';
   String flag = '';
 
   @override
   void initState() {
     super.initState();
-    getCountry('ukr').then((result) {
-      print("dddddddddd");
-      CountryModel countryModel = result[0];
-      setState(() {
-        code = '${countryModel.code}${countryModel.suffix}';
-        flag = countryModel.flag;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (firstStart) {
+      String? locale = Localizations.localeOf(context).countryCode;
+      getCountry(locale != null ? locale.toLowerCase() : "ukr").then((result) {
+        CountryModel countryModel = result[0];
+        setState(() {
+          code = '${countryModel.code}${countryModel.suffix}';
+          flag = countryModel.flag;
+        });
+      });
+      setState(() {
+        firstStart = false;
+      });
+    }
     if (code != '' && flag != '') {
       return ElevatedButton(
         onPressed: () async {
           final result = await showCupertinoModalBottomSheet(
               context: context,
               backgroundColor: Color.fromARGB(255, 37, 43, 59),
-              builder: (context) => Expanded(
-                      child: Stack(
+              builder: (context) => Stack(
                     children: [
                       CountryList(),
                     ],
-                  )));
+                  ));
           if (result != null) {
             setState(() {
               code = result[0];
@@ -49,22 +54,8 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
             });
           }
         },
-        // ignore: sort_child_properties_last
-        child: Row(
-          children: [
-            // Image.network(
-            //   // flag,
-            //   // height: 5,
-            //   // width: 10,
-            // ),
-            Text(
-              code,
-              style: const TextStyle(color: Color(0xFF594C74), fontSize: 16),
-              textAlign: TextAlign.start,
-            ),
-          ],
-        ),
         style: ButtonStyle(
+          minimumSize: MaterialStateProperty.all(Size(71, 48)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -78,6 +69,27 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
             const EdgeInsets.fromLTRB(20, 0, 5, 0),
           ),
+        ),
+        child: Row(
+          children: [
+            Image.network(
+              flag,
+              height: 15,
+              width: 20,
+              fit: BoxFit.fill,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              code,
+              style: const TextStyle(
+                  color: Color(0xE6594C74),
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal),
+              textAlign: TextAlign.start,
+            ),
+          ],
         ),
       );
     } else {

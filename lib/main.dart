@@ -32,7 +32,6 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -69,52 +68,48 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
                 ),
                 Row(
                   children: [
-                    const SizedBox(
-                      width: 71,
-                      height: 48,
-                      child: CountryPickerButton(),
-                    ),
+                    CountryPickerButton(),
                     const SizedBox(
                       width: 8,
                     ),
                     Expanded(
-                      child: SizedBox(
-                        width: 256,
-                        height: 48,
-                        child: TextFormField(
-                          autofocus: true,
-                          keyboardType: TextInputType.phone,
-                          inputFormatters: [
-                            PhoneNumberTextInputFormatter(),
-                          ],
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            filled: true,
-                            fillColor: const Color(0x66F4F5FF),
-                            hintText: '(453) 453-4563',
-                            contentPadding: const EdgeInsets.all(10),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
+                      child: TextFormField(
+                        autofocus: true,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          PhoneNumberTextInputFormatter(),
+                        ],
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          filled: true,
+                          fillColor: const Color(0x66F4F5FF),
+                          hintText: '(453) 453-4563',
+                          hintStyle: const TextStyle(
+                              fontSize: 16.0,
+                              color: Color(0xD9594C74),
+                              fontWeight: FontWeight.normal),
+                          contentPadding: const EdgeInsets.all(10),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          controller: myController,
-                          onChanged: (text) {
-                            if (text.length >= 14) {
-                              setState(() {
-                                isButtonDisabled = false;
-                              });
-                            } else {
-                              setState(() {
-                                isButtonDisabled = true;
-                              });
-                            }
-                          },
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                         ),
+                        controller: myController,
+                        onChanged: (text) {
+                          if (text.length >= 14) {
+                            setState(() {
+                              isButtonDisabled = false;
+                            });
+                          } else {
+                            setState(() {
+                              isButtonDisabled = true;
+                            });
+                          }
+                        },
                       ),
                     ),
                   ],

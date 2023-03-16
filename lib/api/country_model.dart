@@ -47,7 +47,7 @@ Future<List<CountryModel>> getCountry(String countryCode) async {
 
     return country;
   } else {
-    throw Exception('Failed to fetch countries');
+    throw Exception('Failed to fetch country');
   }
 }
 

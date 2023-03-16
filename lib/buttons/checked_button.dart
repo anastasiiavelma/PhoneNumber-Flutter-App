@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class CheckedButton extends StatelessWidget {
   final active;
@@ -16,7 +14,7 @@ class CheckedButton extends StatelessWidget {
         onPressed: active
             ? null
             : () {
-                data();
+                showText();
               },
         style: ButtonStyle(
           backgroundColor: MaterialStatePropertyAll<Color>(
@@ -37,7 +35,7 @@ class CheckedButton extends StatelessWidget {
     );
   }
 
-  data() {
-    print("sdsds");
+  showText() {
+    print("Well done!");
   }
 }

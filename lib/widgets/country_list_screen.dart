@@ -2,7 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:phone_number_app/api/country_model.dart';
 import 'package:phone_number_app/main.dart';
 
-class CountryList extends StatelessWidget {
+class CountryList extends StatefulWidget {
+  @override
+  State<CountryList> createState() => _CountryListState();
+}
+
+class _CountryListState extends State<CountryList> {
+  final controller = TextEditingController();
+  String searchString = "";
+
   @override
   Widget build(BuildContext context) {
     void closeSheet(String code, String flag) =>
@@ -11,7 +19,7 @@ class CountryList extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-            backgroundColor: Color(0xFF8EAAFB),
+            backgroundColor: const Color(0xFF8EAAFB),
             elevation: 0,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,19 +33,19 @@ class CountryList extends StatelessWidget {
                   width: 25,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    color: Color(0x66F4F5FF),
+                    color: const Color(0x66F4F5FF),
                   ),
                   child: IconButton(
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(
                       Icons.close,
                       size: 15,
                       color: Color(0xFF594C74),
                     ),
-                    style: ButtonStyle(
-                      iconColor: const MaterialStatePropertyAll<Color>(
-                          Color(0xFF594C74)),
+                    style: const ButtonStyle(
+                      iconColor:
+                          MaterialStatePropertyAll<Color>(Color(0xFF594C74)),
                       alignment: Alignment.bottomRight,
                     ),
                   ),
@@ -50,40 +58,86 @@ class CountryList extends StatelessWidget {
             if (snapshot.hasData) {
               return Container(
                 color: const Color(0xFF8EAAFB),
-                child: ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        closeSheet(
-                            '${snapshot.data![index].code}${snapshot.data![index].suffix}',
-                            snapshot.data![index].flag.toString());
-                      },
-                      child: ListTile(
-                        leading: Image.network(
-                          snapshot.data![index].flag,
-                          height: 20,
-                          width: 38,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            searchString = value;
+                          });
+                        },
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          border: InputBorder.none,
+                          filled: true,
+                          fillColor: const Color(0x66F4F5FF),
+                          hintText: 'Search',
+                          hintStyle: const TextStyle(
+                              fontSize: 16.0,
+                              color: Color(0xD9594C74),
+                              fontWeight: FontWeight.normal),
+                          contentPadding: const EdgeInsets.all(10),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                         ),
-                        title: Row(
-                          children: [
-                            Text(
-                              '${snapshot.data![index].code}${snapshot.data![index].suffix}',
-                              style: TextStyle(color: Colors.black45),
-                            ),
-                            Text(
-                              '  ${snapshot.data![index].nameCommon}',
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                        controller: controller,
                       ),
-                    );
-                  },
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          String codeAndSuf =
+                              '${snapshot.data![index].code}${snapshot.data![index].suffix}';
+                          return GestureDetector(
+                            onTap: () {
+                              closeSheet(codeAndSuf,
+                                  snapshot.data![index].flag.toString());
+                            },
+                            child: snapshot.data![index].nameCommon
+                                        .toLowerCase()
+                                        .contains(searchString.toLowerCase()) ||
+                                    codeAndSuf.contains(searchString)
+                                ? ListTile(
+                                    leading: Image.network(
+                                      snapshot.data![index].flag,
+                                      height: 20,
+                                      width: 38,
+                                      fit: BoxFit.fill,
+                                    ),
+                                    title: Row(
+                                      children: [
+                                        Text(
+                                          codeAndSuf,
+                                          style: const TextStyle(
+                                              color: Colors.black45),
+                                        ),
+                                        Text(
+                                          '  ${snapshot.data![index].nameCommon}',
+                                          textAlign: TextAlign.start,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container(),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               );
             } else if (snapshot.hasError) {
