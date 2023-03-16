@@ -12,30 +12,23 @@ class CountryPickerButton extends StatefulWidget {
 }
 
 class _CountryPickerButtonState extends State<CountryPickerButton> {
-  bool firstStart = true;
   String code = '';
   String flag = '';
 
   @override
   void initState() {
     super.initState();
+    getCountry("ukr").then((result) {
+      CountryModel countryModel = result[0];
+      setState(() {
+        code = '${countryModel.code}${countryModel.suffix}';
+        flag = countryModel.flag;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (firstStart) {
-      String? locale = Localizations.localeOf(context).countryCode;
-      getCountry(locale != null ? locale.toLowerCase() : "ukr").then((result) {
-        CountryModel countryModel = result[0];
-        setState(() {
-          code = '${countryModel.code}${countryModel.suffix}';
-          flag = countryModel.flag;
-        });
-      });
-      setState(() {
-        firstStart = false;
-      });
-    }
     if (code != '' && flag != '') {
       return ElevatedButton(
         onPressed: () async {
