@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:phone_number_app/api/country_model.dart';
 import 'package:phone_number_app/widgets/country_list_screen.dart';
 
@@ -34,9 +33,9 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
         onPressed: () async {
           final result = await showCupertinoModalBottomSheet(
               context: context,
-              backgroundColor: Color.fromARGB(255, 37, 43, 59),
+              backgroundColor: const Color.fromARGB(255, 37, 43, 59),
               builder: (context) => Stack(
-                    children: [
+                    children: const [
                       CountryList(),
                     ],
                   ));
@@ -48,7 +47,7 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
           }
         },
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(Size(71, 48)),
+          minimumSize: MaterialStateProperty.all(const Size(71, 48)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),

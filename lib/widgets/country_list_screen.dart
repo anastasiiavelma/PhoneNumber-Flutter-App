@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:phone_number_app/api/country_model.dart';
-import 'package:phone_number_app/main.dart';
 
 class CountryList extends StatefulWidget {
+  const CountryList({super.key});
+
   @override
   State<CountryList> createState() => _CountryListState();
 }
 
 class _CountryListState extends State<CountryList> {
-  final controller = TextEditingController();
   String searchString = "";
 
   @override
@@ -70,7 +70,7 @@ class _CountryListState extends State<CountryList> {
                         },
                         autofocus: true,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
+                          prefixIcon: const Icon(Icons.search),
                           border: InputBorder.none,
                           filled: true,
                           fillColor: const Color(0x66F4F5FF),
@@ -89,7 +89,6 @@ class _CountryListState extends State<CountryList> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        controller: controller,
                       ),
                     ),
                     Expanded(

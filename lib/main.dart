@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:phone_number_app/widgets/phone_number_format.dart';
 import 'buttons/checked_button.dart';
 import 'buttons/country_picker_button.dart';
@@ -31,8 +30,9 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
   bool isButtonDisabled = true;
 
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    myController.dispose();
+    super.dispose();
   }
 
   @override
@@ -68,7 +68,7 @@ class _EnterNumberScreenState extends State<EnterNumberScreen> {
                 ),
                 Row(
                   children: [
-                    CountryPickerButton(),
+                    const CountryPickerButton(),
                     const SizedBox(
                       width: 8,
                     ),

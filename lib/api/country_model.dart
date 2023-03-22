@@ -26,7 +26,7 @@ class CountryModel extends Equatable {
     final suffix = json['idd']['suffixes'] != null
         ? json['idd']['suffixes'][0]
         : 'doesnt exit';
-    final code = json['idd']['root'] != null ? json['idd']['root'] : '';
+    final code = json['idd']['root'] ?? '';
 
     return CountryModel(
       code: code,
@@ -39,7 +39,7 @@ class CountryModel extends Equatable {
 
 Future<List<CountryModel>> getCountry(String countryCode) async {
   final response = await http
-      .get(Uri.parse('https://restcountries.com/v3.1/alpha/${countryCode}'));
+      .get(Uri.parse('https://restcountries.com/v3.1/alpha/$countryCode'));
   if (response.statusCode == 200) {
     List<dynamic> data = jsonDecode(response.body);
     List<CountryModel> country =

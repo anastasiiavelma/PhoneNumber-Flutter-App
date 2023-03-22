@@ -1,5 +1,5 @@
 {
   "cmake.sourceDirectory": "${workspaceFolder}/linux",
   "java.configuration.updateBuildConfiguration": "interactive",
-  "cSpell.words": ["autofocus"]
+  "cSpell.words": ["autofocus", "Cupertino", "doesnt", "LTRB"]
 }
