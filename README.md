@@ -7,9 +7,8 @@
 
 ## Image
 
-![First Screen](https://drive.google.com/file/d/1cX4PuTsycPbBRZTJzLvpoakv9tLxK6w5/view?usp=share_link)
-![Entering number](https://drive.google.com/file/d/13EAVzV-yu4vss3OUXgmU2M-9j0Mxu2OV/view?usp=share_link)
-![Search](https://drive.google.com/file/d/13nC2qV-UMYP_pC86Lh6wOjWZ36J80Jj6/view?usp=share_link)
+<a href="https://drive.google.com/file/d/1cX4PuTsycPbBRZTJzLvpoakv9tLxK6w5/view?usp=sharing">
+
 
 
 
