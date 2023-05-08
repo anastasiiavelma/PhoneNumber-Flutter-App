@@ -11,19 +11,12 @@
 </ul>
 
 <h2>Images</h2>
+<div style="display: flex;">
 <center>
-    <a href="https://drive.google.com/file/d/1cX4PuTsycPbBRZTJzLvpoakv9tLxK6w5/view?usp=share_link">
-        <img height="150px" src="https://drive.google.com/file/d/1cX4PuTsycPbBRZTJzLvpoakv9tLxK6w5" title="Click" />
-    </a>
+    <img src="https://user-images.githubusercontent.com/103375322/236907725-7d6125d1-42e3-494d-b6c6-fd6d18a5ab63.jpg" style="height: 500px;"/>
 </center>
 <center>
-    <a href="https://drive.google.com/file/d/13EAVzV-yu4vss3OUXgmU2M-9j0Mxu2OV/view?usp=share_link">
-        <img height="150px" src="https://drive.google.com/file/d/13EAVzV-yu4vss3OUXgmU2M-9j0Mxu2OV" title="Click" />
-    </a>
+      <img src="https://user-images.githubusercontent.com/103375322/236908594-6b22faa7-6078-4752-b6ab-3a48c57b3629.jpg" style="height: 500px;"/>
 </center>
-<center>
-    <a href="https://drive.google.com/file/d/13nC2qV-UMYP_pC86Lh6wOjWZ36J80Jj6/view?usp=share_link">
-        <img height="150px" src="https://drive.google.com/file/d/13nC2qV-UMYP_pC86Lh6wOjWZ36J80Jj6" title="Click" />
-    </a>
-</center>
+</div>
 
